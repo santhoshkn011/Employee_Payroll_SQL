@@ -1,6 +1,11 @@
-mysql>  INSERT INTO employee_payroll ( name, salary, start) VALUES
-    -> ('Santhosh', 10000000.00, '2022-05-22'),
-    -> ('Aravind', 10000000.00, '2022-05-25'),
-    -> ('Namitha', 10000000.00, '2022-05-29');
-Query OK, 3 rows affected (0.01 sec)
-Records: 3  Duplicates: 0  Warnings: 0
+mysql> SELECT * FROM employee_payroll;
++----+----------+----------+------------+
+| id | name     | salary   | start      |
++----+----------+----------+------------+
+|  1 | Santhosh | 10000000 | 2022-05-22 |
+|  2 | Aravind  | 10000000 | 2022-05-25 |
+|  3 | Namitha  | 10000000 | 2022-05-29 |
++----+----------+----------+------------+
+3 rows in set (0.00 sec)
+
+mysql>
