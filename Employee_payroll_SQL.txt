@@ -1,20 +1,6 @@
-mysql> CREATE TABLE employee_payroll
-    -> (
-    ->  id       INT unsigned NOT NULL AUTO_INCREMENT,
-    -> name     VARCHAR(150) NOT NULL,
-    -> salary   Double NOT NULL,
-    -> start DATE NOT NULL,
-    -> PRIMARY KEY (id)
-    -> );
-Query OK, 0 rows affected (0.07 sec)
-
-mysql> DESCRIBE employee_payroll;
-+--------+--------------+------+-----+---------+----------------+
-| Field  | Type         | Null | Key | Default | Extra          |
-+--------+--------------+------+-----+---------+----------------+
-| id     | int unsigned | NO   | PRI | NULL    | auto_increment |
-| name   | varchar(150) | NO   |     | NULL    |                |
-| salary | double       | NO   |     | NULL    |                |
-| start  | date         | NO   |     | NULL    |                |
-+--------+--------------+------+-----+---------+----------------+
-4 rows in set (0.01 sec)
+mysql>  INSERT INTO employee_payroll ( name, salary, start) VALUES
+    -> ('Santhosh', 10000000.00, '2022-05-22'),
+    -> ('Aravind', 10000000.00, '2022-05-25'),
+    -> ('Namitha', 10000000.00, '2022-05-29');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
