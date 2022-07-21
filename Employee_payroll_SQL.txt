@@ -1,11 +1,17 @@
-mysql> SELECT * FROM employee_payroll;
-+----+----------+----------+------------+
-| id | name     | salary   | start      |
-+----+----------+----------+------------+
-|  1 | Santhosh | 10000000 | 2022-05-22 |
-|  2 | Aravind  | 10000000 | 2022-05-25 |
-|  3 | Namitha  | 10000000 | 2022-05-29 |
-+----+----------+----------+------------+
-3 rows in set (0.00 sec)
+mysql> SELECT salary FROM employee_payroll WHERE name = 'Namitha';
++----------+
+| salary   |
++----------+
+| 10000000 |
++----------+
+1 row in set (0.00 sec)
 
-mysql>
+mysql> SELECT * FROM employee_payroll
+    -> WHERE start BETWEEN CAST('2022-05-23' AS DATE) AND DATE(NOW());
++----+---------+----------+------------+
+| id | name    | salary   | start      |
++----+---------+----------+------------+
+|  2 | Aravind | 10000000 | 2022-05-25 |
+|  3 | Namitha | 10000000 | 2022-05-29 |
++----+---------+----------+------------+
+2 rows in set (0.00 sec)
