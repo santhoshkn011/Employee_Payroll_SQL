@@ -1,27 +1,20 @@
-Enter password: **************
-Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 15
-Server version: 8.0.29 MySQL Community Server - GPL
+mysql> CREATE TABLE employee_payroll
+    -> (
+    ->  id       INT unsigned NOT NULL AUTO_INCREMENT,
+    -> name     VARCHAR(150) NOT NULL,
+    -> salary   Double NOT NULL,
+    -> start DATE NOT NULL,
+    -> PRIMARY KEY (id)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
 
-Copyright (c) 2000, 2022, Oracle and/or its affiliates.
-
-Oracle is a registered trademark of Oracle Corporation and/or its
-affiliates. Other names may be trademarks of their respective
-owners.
-
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
-mysql> CREATE DATABASE employee_payroll_service;
-Query OK, 1 row affected (0.01 sec)
-
-mysql> USE employee_payroll_service;
-Database changed
-mysql> SELECT DATABASE();
-+--------------------------+
-| DATABASE()               |
-+--------------------------+
-| employee_payroll_service |
-+--------------------------+
-1 row in set (0.00 sec)
-
-mysql>
+mysql> DESCRIBE employee_payroll;
++--------+--------------+------+-----+---------+----------------+
+| Field  | Type         | Null | Key | Default | Extra          |
++--------+--------------+------+-----+---------+----------------+
+| id     | int unsigned | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(150) | NO   |     | NULL    |                |
+| salary | double       | NO   |     | NULL    |                |
+| start  | date         | NO   |     | NULL    |                |
++--------+--------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
