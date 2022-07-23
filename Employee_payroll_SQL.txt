@@ -1,118 +1,4 @@
-Enter password: **************
-Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 15
-Server version: 8.0.29 MySQL Community Server - GPL
-
-Copyright (c) 2000, 2022, Oracle and/or its affiliates.
-
-Oracle is a registered trademark of Oracle Corporation and/or its
-affiliates. Other names may be trademarks of their respective
-owners.
-
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
-mysql> CREATE DATABASE employee_payroll_service;
-Query OK, 1 row affected (0.01 sec)
-
-mysql> USE employee_payroll_service;
-Database changed
-mysql> SELECT DATABASE();
-+--------------------------+
-| DATABASE()               |
-+--------------------------+
-| employee_payroll_service |
-+--------------------------+
-1 row in set (0.00 sec)
-
-mysql> CREATE TABLE employee_payroll
-    -> (
-    ->  id       INT unsigned NOT NULL AUTO_INCREMENT,
-    -> name     VARCHAR(150) NOT NULL,
-    -> salary   Double NOT NULL,
-    -> start DATE NOT NULL,
-    -> PRIMARY KEY (id)
-    -> );
-Query OK, 0 rows affected (0.07 sec)
-
 mysql> DESCRIBE employee_payroll;
-+--------+--------------+------+-----+---------+----------------+
-| Field  | Type         | Null | Key | Default | Extra          |
-+--------+--------------+------+-----+---------+----------------+
-| id     | int unsigned | NO   | PRI | NULL    | auto_increment |
-| name   | varchar(150) | NO   |     | NULL    |                |
-| salary | double       | NO   |     | NULL    |                |
-| start  | date         | NO   |     | NULL    |                |
-+--------+--------------+------+-----+---------+----------------+
-4 rows in set (0.01 sec)
-
-mysql> DESCRIBE employee_payroll;
-+--------+--------------+------+-----+---------+----------------+
-| Field  | Type         | Null | Key | Default | Extra          |
-+--------+--------------+------+-----+---------+----------------+
-| id     | int unsigned | NO   | PRI | NULL    | auto_increment |
-| name   | varchar(150) | NO   |     | NULL    |                |
-| salary | double       | NO   |     | NULL    |                |
-| start  | date         | NO   |     | NULL    |                |
-+--------+--------------+------+-----+---------+----------------+
-4 rows in set (0.00 sec)
-
-mysql> INSERT INTO employee_payroll ( name, salary, start) VALUES
-    -> ('Santhosh', 10000000.00, '2022-05-22'),
-    -> ('Aravind', 10000000.00, '2022-05-22'),,
-    -> ('Namitha', 10000000.00, '2022-05-22');
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',
-('Namitha', 10000000.00, '2022-05-22')' at line 3
-mysql>  INSERT INTO employee_payroll ( name, salary, start) VALUES
-    -> ('Santhosh', 10000000.00, '2022-05-22'),
-    -> ('Aravind', 10000000.00, '2022-05-25'),
-    -> ('Namitha', 10000000.00, '2022-05-29');
-Query OK, 3 rows affected (0.01 sec)
-Records: 3  Duplicates: 0  Warnings: 0
-
-mysql> SELECT * FROM employee_payroll;
-+----+----------+----------+------------+
-| id | name     | salary   | start      |
-+----+----------+----------+------------+
-|  1 | Santhosh | 10000000 | 2022-05-22 |
-|  2 | Aravind  | 10000000 | 2022-05-25 |
-|  3 | Namitha  | 10000000 | 2022-05-29 |
-+----+----------+----------+------------+
-3 rows in set (0.00 sec)
-
-mysql> SELECT * FROM employee_payroll
-    -> WHERE start BETWEEN CAST('2022-05-23' AS DATE) AND DATE(NOW());
-+----+---------+----------+------------+
-| id | name    | salary   | start      |
-+----+---------+----------+------------+
-|  2 | Aravind | 10000000 | 2022-05-25 |
-|  3 | Namitha | 10000000 | 2022-05-29 |
-+----+---------+----------+------------+
-2 rows in set (0.00 sec)
-
-mysql> ^C
-mysql> SELECT salary FROM employee_payroll WHERE name = 'Namitha';
-+----------+
-| salary   |
-+----------+
-| 10000000 |
-+----------+
-1 row in set (0.00 sec)
-
-mysql> SELECT * FROM employee_payroll
-    -> WHERE start BETWEEN CAST('2022-05-23' AS DATE) AND DATE(NOW());
-+----+---------+----------+------------+
-| id | name    | salary   | start      |
-+----+---------+----------+------------+
-|  2 | Aravind | 10000000 | 2022-05-25 |
-|  3 | Namitha | 10000000 | 2022-05-29 |
-+----+---------+----------+------------+
-2 rows in set (0.00 sec)
-
-mysql> ALTER TABLE employee_payroll ADD gender CHAR(1) AFTER name;
-Query OK, 0 rows affected (0.04 sec)
-Records: 0  Duplicates: 0  Warnings: 0
-
-mysql> describe employee_payroll;
 +--------+--------------+------+-----+---------+----------------+
 | Field  | Type         | Null | Key | Default | Extra          |
 +--------+--------------+------+-----+---------+----------------+
@@ -122,111 +8,45 @@ mysql> describe employee_payroll;
 | salary | double       | NO   |     | NULL    |                |
 | start  | date         | NO   |     | NULL    |                |
 +--------+--------------+------+-----+---------+----------------+
-5 rows in set (0.00 sec)
+5 rows in set (0.04 sec)
 
-mysql> update employee_payroll set gender = 'M' where name = 'Santhosh' or name = 'Aravind';
-Query OK, 2 rows affected (0.00 sec)
-Rows matched: 2  Changed: 2  Warnings: 0
+mysql> ALTER TABLE employee_payroll ADD phone_number VARCHAR(250) AFTER name;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
 
-mysql> update employee_payroll set gender = 'F' where name = 'Namitha';
-Query OK, 1 row affected (0.01 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
+mysql> ALTER TABLE employee_payroll ADD address VARCHAR(250) AFTER phone_number;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
 
-mysql> SELECT * FROM employee_payroll
-    -> ;
-+----+----------+--------+----------+------------+
-| id | name     | gender | salary   | start      |
-+----+----------+--------+----------+------------+
-|  1 | Santhosh | M      | 10000000 | 2022-05-22 |
-|  2 | Aravind  | M      | 10000000 | 2022-05-25 |
-|  3 | Namitha  | F      | 10000000 | 2022-05-29 |
-+----+----------+--------+----------+------------+
-3 rows in set (0.00 sec)
+mysql> ALTER TABLE employee_payroll ADD department VARCHAR(150) NOT NULL AFTER address;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
 
-mysql> update employee_payroll set salary = 300000000.00 where name = 'Santhosh';
-Query OK, 1 row affected (0.01 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
+mysql> DESCRIBE employee_payroll;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id           | int unsigned | NO   | PRI | NULL    | auto_increment |
+| name         | varchar(150) | NO   |     | NULL    |                |
+| phone_number | varchar(250) | YES  |     | NULL    |                |
+| address      | varchar(250) | YES  |     | NULL    |                |
+| department   | varchar(150) | NO   |     | NULL    |                |
+| gender       | char(1)      | YES  |     | NULL    |                |
+| salary       | double       | NO   |     | NULL    |                |
+| start        | date         | NO   |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
 
-mysql> update employee_payroll set salary = 150000000.00 where name = 'Aravind';
-Query OK, 1 row affected (0.01 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
+mysql> ALTER TABLE employee_payroll ALTER address SET DEFAULT 'TBD';
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
 
 mysql> SELECT * FROM employee_payroll;
-+----+----------+--------+-----------+------------+
-| id | name     | gender | salary    | start      |
-+----+----------+--------+-----------+------------+
-|  1 | Santhosh | M      | 300000000 | 2022-05-22 |
-|  2 | Aravind  | M      | 150000000 | 2022-05-25 |
-|  3 | Namitha  | F      |  10000000 | 2022-05-29 |
-+----+----------+--------+-----------+------------+
++----+----------+--------------+---------+------------+--------+-----------+------------+
+| id | name     | phone_number | address | department | gender | salary    | start      |
++----+----------+--------------+---------+------------+--------+-----------+------------+
+|  1 | Santhosh | NULL         | NULL    |            | M      | 300000000 | 2022-05-22 |
+|  2 | Aravind  | NULL         | NULL    |            | M      | 150000000 | 2022-05-25 |
+|  3 | Namitha  | NULL         | NULL    |            | F      |  10000000 | 2022-05-29 |
++----+----------+--------------+---------+------------+--------+-----------+------------+
 3 rows in set (0.00 sec)
-
-mysql> SELECT SUM(salary) FROM employee_payroll WHERE gender = 'M' GROUP BY gender;
-+-------------+
-| SUM(salary) |
-+-------------+
-|   450000000 |
-+-------------+
-1 row in set (0.00 sec)
-
-mysql> SELECT AVG(salary) FROM employee_payroll WHERE gender = 'M' GROUP BY gender;
-+-------------+
-| AVG(salary) |
-+-------------+
-|   225000000 |
-+-------------+
-1 row in set (0.00 sec)
-
-mysql> SELECT MIN(salary) FROM employee_payroll WHERE gender = 'M' GROUP BY gender;
-+-------------+
-| MIN(salary) |
-+-------------+
-|   150000000 |
-+-------------+
-1 row in set (0.00 sec)
-
-mysql> SELECT MAX(salary) FROM employee_payroll WHERE gender = 'M' GROUP BY gender;
-+-------------+
-| MAX(salary) |
-+-------------+
-|   300000000 |
-+-------------+
-1 row in set (0.00 sec)
-
-mysql> SELECT gender, AVG(salary) FROM employee_payroll GROUP BY gender;
-+--------+-------------+
-| gender | AVG(salary) |
-+--------+-------------+
-| M      |   225000000 |
-| F      |    10000000 |
-+--------+-------------+
-2 rows in set (0.00 sec)
-
-mysql> SELECT gender, SUM(salary) FROM employee_payroll GROUP BY gender;
-+--------+-------------+
-| gender | SUM(salary) |
-+--------+-------------+
-| M      |   450000000 |
-| F      |    10000000 |
-+--------+-------------+
-2 rows in set (0.00 sec)
-
-mysql> SELECT gender, MAX(salary) FROM employee_payroll GROUP BY gender;
-+--------+-------------+
-| gender | MAX(salary) |
-+--------+-------------+
-| M      |   300000000 |
-| F      |    10000000 |
-+--------+-------------+
-2 rows in set (0.00 sec)
-
-mysql> SELECT gender, COUNT(name) FROM employee_payroll GROUP BY gender;
-+--------+-------------+
-| gender | COUNT(name) |
-+--------+-------------+
-| M      |           2 |
-| F      |           1 |
-+--------+-------------+
-2 rows in set (0.00 sec)
-
-mysql>
