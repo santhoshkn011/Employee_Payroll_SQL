@@ -1,46 +1,3 @@
-mysql> DESCRIBE employee_payroll;
-+--------+--------------+------+-----+---------+----------------+
-| Field  | Type         | Null | Key | Default | Extra          |
-+--------+--------------+------+-----+---------+----------------+
-| id     | int unsigned | NO   | PRI | NULL    | auto_increment |
-| name   | varchar(150) | NO   |     | NULL    |                |
-| gender | char(1)      | YES  |     | NULL    |                |
-| salary | double       | NO   |     | NULL    |                |
-| start  | date         | NO   |     | NULL    |                |
-+--------+--------------+------+-----+---------+----------------+
-5 rows in set (0.04 sec)
-
-mysql> ALTER TABLE employee_payroll ADD phone_number VARCHAR(250) AFTER name;
-Query OK, 0 rows affected (0.06 sec)
-Records: 0  Duplicates: 0  Warnings: 0
-
-mysql> ALTER TABLE employee_payroll ADD address VARCHAR(250) AFTER phone_number;
-Query OK, 0 rows affected (0.02 sec)
-Records: 0  Duplicates: 0  Warnings: 0
-
-mysql> ALTER TABLE employee_payroll ADD department VARCHAR(150) NOT NULL AFTER address;
-Query OK, 0 rows affected (0.02 sec)
-Records: 0  Duplicates: 0  Warnings: 0
-
-mysql> DESCRIBE employee_payroll;
-+--------------+--------------+------+-----+---------+----------------+
-| Field        | Type         | Null | Key | Default | Extra          |
-+--------------+--------------+------+-----+---------+----------------+
-| id           | int unsigned | NO   | PRI | NULL    | auto_increment |
-| name         | varchar(150) | NO   |     | NULL    |                |
-| phone_number | varchar(250) | YES  |     | NULL    |                |
-| address      | varchar(250) | YES  |     | NULL    |                |
-| department   | varchar(150) | NO   |     | NULL    |                |
-| gender       | char(1)      | YES  |     | NULL    |                |
-| salary       | double       | NO   |     | NULL    |                |
-| start        | date         | NO   |     | NULL    |                |
-+--------------+--------------+------+-----+---------+----------------+
-8 rows in set (0.00 sec)
-
-mysql> ALTER TABLE employee_payroll ALTER address SET DEFAULT 'TBD';
-Query OK, 0 rows affected (0.01 sec)
-Records: 0  Duplicates: 0  Warnings: 0
-
 mysql> SELECT * FROM employee_payroll;
 +----+----------+--------------+---------+------------+--------+-----------+------------+
 | id | name     | phone_number | address | department | gender | salary    | start      |
@@ -50,3 +7,52 @@ mysql> SELECT * FROM employee_payroll;
 |  3 | Namitha  | NULL         | NULL    |            | F      |  10000000 | 2022-05-29 |
 +----+----------+--------------+---------+------------+--------+-----------+------------+
 3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE employee_payroll RENAME COLUMN salary TO basic_pay;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE employee_payroll ADD deductions DOuble NOT NULL AFTER basic_pay;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>  ALTER TABLE employee_payroll ADD taxable_pay Double NOT NULL AFTER deductions;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE employee_payroll ADD tax Double NOT NULL AFTER taxable_pay;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE employee_payroll ADD net_pay Double NOT NULL AFTER tax;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>  SELECT * FROM employee_payroll;
++----+----------+--------------+---------+------------+--------+-----------+------------+-------------+-----+---------+------------+
+| id | name     | phone_number | address | department | gender | basic_pay | deductions | taxable_pay | tax | net_pay | start      |
++----+----------+--------------+---------+------------+--------+-----------+------------+-------------+-----+---------+------------+
+|  1 | Santhosh | NULL         | NULL    |            | M      | 300000000 |          0 |           0 |   0 |       0 | 2022-05-22 |
+|  2 | Aravind  | NULL         | NULL    |            | M      | 150000000 |          0 |           0 |   0 |       0 | 2022-05-25 |
+|  3 | Namitha  | NULL         | NULL    |            | F      |  10000000 |          0 |           0 |   0 |       0 | 2022-05-29 |
++----+----------+--------------+---------+------------+--------+-----------+------------+-------------+-----+---------+------------+
+3 rows in set (0.00 sec)
+
+mysql> DESCRIBE employee_payroll;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id           | int unsigned | NO   | PRI | NULL    | auto_increment |
+| name         | varchar(150) | NO   |     | NULL    |                |
+| phone_number | varchar(250) | YES  |     | NULL    |                |
+| address      | varchar(250) | YES  |     | TBD     |                |
+| department   | varchar(150) | NO   |     | NULL    |                |
+| gender       | char(1)      | YES  |     | NULL    |                |
+| basic_pay    | double       | NO   |     | NULL    |                |
+| deductions   | double       | NO   |     | NULL    |                |
+| taxable_pay  | double       | NO   |     | NULL    |                |
+| tax          | double       | NO   |     | NULL    |                |
+| net_pay      | double       | NO   |     | NULL    |                |
+| start        | date         | NO   |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+12 rows in set (0.00 sec)
