@@ -1,58 +1,36 @@
-mysql> SELECT * FROM employee_payroll;
-+----+----------+--------------+---------+------------+--------+-----------+------------+
-| id | name     | phone_number | address | department | gender | salary    | start      |
-+----+----------+--------------+---------+------------+--------+-----------+------------+
-|  1 | Santhosh | NULL         | NULL    |            | M      | 300000000 | 2022-05-22 |
-|  2 | Aravind  | NULL         | NULL    |            | M      | 150000000 | 2022-05-25 |
-|  3 | Namitha  | NULL         | NULL    |            | F      |  10000000 | 2022-05-29 |
-+----+----------+--------------+---------+------------+--------+-----------+------------+
-3 rows in set (0.00 sec)
+mysql> Update employee_payroll set department = 'Marketting' where name = 'Namitha';
 
-mysql> ALTER TABLE employee_payroll RENAME COLUMN salary TO basic_pay;
-Query OK, 0 rows affected (0.02 sec)
-Records: 0  Duplicates: 0  Warnings: 0
+mysql> INSERT INTO employee_payroll
+    -> (name, department, gender, basic_pay, deductions, taxable_pay, tax, net_pay, start) VALUES
+    -> ('Terisa', 'Marketing', 'F', 3000000.00, 1000000.00, 2000000.00, 500000.00, 1500000.00, '2022-01-03');
+Query OK, 1 row affected (0.01 sec)
 
-mysql> ALTER TABLE employee_payroll ADD deductions DOuble NOT NULL AFTER basic_pay;
-Query OK, 0 rows affected (0.04 sec)
-Records: 0  Duplicates: 0  Warnings: 0
+mysql> Update employee_payroll set department = 'Sales' where name = 'Terisa';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
 
-mysql>  ALTER TABLE employee_payroll ADD taxable_pay Double NOT NULL AFTER deductions;
-Query OK, 0 rows affected (0.02 sec)
-Records: 0  Duplicates: 0  Warnings: 0
+mysql> select * from employee_payroll where name = 'Terisa';
++----+--------+--------------+---------+------------+--------+-----------+------------+-------------+--------+---------+------------+
+| id | name   | phone_number | address | department | gender | basic_pay | deductions | taxable_pay | tax    | net_pay | start      |
++----+--------+--------------+---------+------------+--------+-----------+------------+-------------+--------+---------+------------+
+|  4 | Terisa | NULL         | TBD     | Sales      | F      |   3000000 |    1000000 |     2000000 | 500000 | 1500000 | 2022-01-03 |
++----+--------+--------------+---------+------------+--------+-----------+------------+-------------+--------+---------+------------+
+1 row in set (0.00 sec)
 
-mysql> ALTER TABLE employee_payroll ADD tax Double NOT NULL AFTER taxable_pay;
-Query OK, 0 rows affected (0.02 sec)
-Records: 0  Duplicates: 0  Warnings: 0
+mysql> INSERT INTO employee_payroll
+    -> (name, department, gender, basic_pay, deductions, taxable_pay, tax, net_pay, start) VALUES
+    -> ('Terisa', 'Marketing', 'F', 3000000.00, 1000000.00, 2000000.00, 500000.00, 1500000.00, '2022-01-03');
+Query OK, 1 row affected (0.01 sec)
 
-mysql> ALTER TABLE employee_payroll ADD net_pay Double NOT NULL AFTER tax;
-Query OK, 0 rows affected (0.02 sec)
-Records: 0  Duplicates: 0  Warnings: 0
+mysql> select * from employee_payroll;
++----+----------+--------------+---------+------------+--------+-----------+------------+-------------+--------+---------+------------+
+| id | name     | phone_number | address | department | gender | basic_pay | deductions | taxable_pay | tax    | net_pay | start      |
++----+----------+--------------+---------+------------+--------+-----------+------------+-------------+--------+---------+------------+
+|  1 | Santhosh | NULL         | NULL    |            | M      | 300000000 |          0 |           0 |      0 |       0 | 2022-05-22 |
+|  2 | Aravind  | NULL         | NULL    |            | M      | 150000000 |          0 |           0 |      0 |       0 | 2022-05-25 |
+|  3 | Namitha  | NULL         | NULL    | Marketting | F      |  10000000 |          0 |           0 |      0 |       0 | 2022-05-29 |
+|  4 | Terisa   | NULL         | TBD     | Marketting | F      |   3000000 |    1000000 |     2000000 | 500000 | 1500000 | 2022-01-03 |
+|  5 | Terisa   | NULL         | TBD     | Sales      | F      |   3000000 |    1000000 |     2000000 | 500000 | 1500000 | 2022-01-03 |
++----+----------+--------------+---------+------------+--------+-----------+------------+-------------+--------+---------+------------+
+5 rows in set (0.00 sec)
 
-mysql>  SELECT * FROM employee_payroll;
-+----+----------+--------------+---------+------------+--------+-----------+------------+-------------+-----+---------+------------+
-| id | name     | phone_number | address | department | gender | basic_pay | deductions | taxable_pay | tax | net_pay | start      |
-+----+----------+--------------+---------+------------+--------+-----------+------------+-------------+-----+---------+------------+
-|  1 | Santhosh | NULL         | NULL    |            | M      | 300000000 |          0 |           0 |   0 |       0 | 2022-05-22 |
-|  2 | Aravind  | NULL         | NULL    |            | M      | 150000000 |          0 |           0 |   0 |       0 | 2022-05-25 |
-|  3 | Namitha  | NULL         | NULL    |            | F      |  10000000 |          0 |           0 |   0 |       0 | 2022-05-29 |
-+----+----------+--------------+---------+------------+--------+-----------+------------+-------------+-----+---------+------------+
-3 rows in set (0.00 sec)
-
-mysql> DESCRIBE employee_payroll;
-+--------------+--------------+------+-----+---------+----------------+
-| Field        | Type         | Null | Key | Default | Extra          |
-+--------------+--------------+------+-----+---------+----------------+
-| id           | int unsigned | NO   | PRI | NULL    | auto_increment |
-| name         | varchar(150) | NO   |     | NULL    |                |
-| phone_number | varchar(250) | YES  |     | NULL    |                |
-| address      | varchar(250) | YES  |     | TBD     |                |
-| department   | varchar(150) | NO   |     | NULL    |                |
-| gender       | char(1)      | YES  |     | NULL    |                |
-| basic_pay    | double       | NO   |     | NULL    |                |
-| deductions   | double       | NO   |     | NULL    |                |
-| taxable_pay  | double       | NO   |     | NULL    |                |
-| tax          | double       | NO   |     | NULL    |                |
-| net_pay      | double       | NO   |     | NULL    |                |
-| start        | date         | NO   |     | NULL    |                |
-+--------------+--------------+------+-----+---------+----------------+
-12 rows in set (0.00 sec)
