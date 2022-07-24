@@ -1,36 +1,164 @@
-mysql> Update employee_payroll set department = 'Marketting' where name = 'Namitha';
+mysql> CREATE TABLE company
+    -> (
+    -> company_id INT NOT NULL,
+    -> company_name VARCHAR(150) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.09 sec)
 
-mysql> INSERT INTO employee_payroll
-    -> (name, department, gender, basic_pay, deductions, taxable_pay, tax, net_pay, start) VALUES
-    -> ('Terisa', 'Marketing', 'F', 3000000.00, 1000000.00, 2000000.00, 500000.00, 1500000.00, '2022-01-03');
+mysql> describe company;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| company_id   | int          | NO   |     | NULL    |       |
+| company_name | varchar(150) | NO   |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+2 rows in set (0.04 sec)
+
+mysql> INSERT INTO company ( company_id, company_name) VALUES
+    -> (1008, 'BridgeLabz');
 Query OK, 1 row affected (0.01 sec)
 
-mysql> Update employee_payroll set department = 'Sales' where name = 'Terisa';
-Query OK, 1 row affected (0.01 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
-
-mysql> select * from employee_payroll where name = 'Terisa';
-+----+--------+--------------+---------+------------+--------+-----------+------------+-------------+--------+---------+------------+
-| id | name   | phone_number | address | department | gender | basic_pay | deductions | taxable_pay | tax    | net_pay | start      |
-+----+--------+--------------+---------+------------+--------+-----------+------------+-------------+--------+---------+------------+
-|  4 | Terisa | NULL         | TBD     | Sales      | F      |   3000000 |    1000000 |     2000000 | 500000 | 1500000 | 2022-01-03 |
-+----+--------+--------------+---------+------------+--------+-----------+------------+-------------+--------+---------+------------+
-1 row in set (0.00 sec)
-
-mysql> INSERT INTO employee_payroll
-    -> (name, department, gender, basic_pay, deductions, taxable_pay, tax, net_pay, start) VALUES
-    -> ('Terisa', 'Marketing', 'F', 3000000.00, 1000000.00, 2000000.00, 500000.00, 1500000.00, '2022-01-03');
+mysql> INSERT INTO company ( company_id, company_name) VALUES
+    -> (11057, 'Oracle');
 Query OK, 1 row affected (0.01 sec)
 
-mysql> select * from employee_payroll;
-+----+----------+--------------+---------+------------+--------+-----------+------------+-------------+--------+---------+------------+
-| id | name     | phone_number | address | department | gender | basic_pay | deductions | taxable_pay | tax    | net_pay | start      |
-+----+----------+--------------+---------+------------+--------+-----------+------------+-------------+--------+---------+------------+
-|  1 | Santhosh | NULL         | NULL    |            | M      | 300000000 |          0 |           0 |      0 |       0 | 2022-05-22 |
-|  2 | Aravind  | NULL         | NULL    |            | M      | 150000000 |          0 |           0 |      0 |       0 | 2022-05-25 |
-|  3 | Namitha  | NULL         | NULL    | Marketting | F      |  10000000 |          0 |           0 |      0 |       0 | 2022-05-29 |
-|  4 | Terisa   | NULL         | TBD     | Marketting | F      |   3000000 |    1000000 |     2000000 | 500000 | 1500000 | 2022-01-03 |
-|  5 | Terisa   | NULL         | TBD     | Sales      | F      |   3000000 |    1000000 |     2000000 | 500000 | 1500000 | 2022-01-03 |
-+----+----------+--------------+---------+------------+--------+-----------+------------+-------------+--------+---------+------------+
-5 rows in set (0.00 sec)
+mysql> Select * FROM company
+    -> ;
++------------+--------------+
+| company_id | company_name |
++------------+--------------+
+|       1008 | BridgeLabz   |
+|      11057 | Oracle       |
++------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql>  CREATE TABLE employee
+    -> (
+    -> employee_id INT NOT NULL,
+    -> company_id INT NOT NULL,
+    -> phone_number VARCHAR(150),
+    -> address VARCHAR(250),
+    -> gender char(1)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> ALTER TABLE employee ADD employee_name  VARCHAR(150) NOT NULL AFTER employee_id;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe employee
+    -> ;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| employee_id   | int          | NO   |     | NULL    |       |
+| employee_name | varchar(150) | NO   |     | NULL    |       |
+| company_id    | int          | NO   |     | NULL    |       |
+| phone_number  | varchar(150) | YES  |     | NULL    |       |
+| address       | varchar(250) | YES  |     | NULL    |       |
+| gender        | char(1)      | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> INSERT INTO employee ( employee_id,employee_name, company_id, phone_number, address, gender) VALUES
+    -> (1, 'Terisa', 1008, '123456789', 'Lane 24', 'F'),
+    -> (2, 'Santhosh', 1008, '987654321', 'Street 8', 'M'),
+    -> (3, 'Rahul', 1008, '012312312', 'Walls Street', 'M')
+    -> ;
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql>  SELECT * From employee
+    -> ;
++-------------+---------------+------------+--------------+--------------+--------+
+| employee_id | employee_name | company_id | phone_number | address      | gender |
++-------------+---------------+------------+--------------+--------------+--------+
+|           1 | Terisa        |       1008 | 123456789    | Lane 24      | F      |
+|           2 | Santhosh      |       1008 | 987654321    | Street 8     | M      |
+|           3 | Rahul         |       1008 | 012312312    | Walls Street | M      |
++-------------+---------------+------------+--------------+--------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE payroll
+    -> (
+    -> employee_id INT NOT NULL,
+    -> basic_pay Double NOT NULL,
+    -> tax Double NOT NULL,
+    -> taxable_pay Double NOT NULL,
+    -> deductions Double NOT NULL,
+    -> net_pay Double NOT NULL,
+    -> start DATE NOT NULL
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> describe payroll
+    -> ;
++-------------+--------+------+-----+---------+-------+
+| Field       | Type   | Null | Key | Default | Extra |
++-------------+--------+------+-----+---------+-------+
+| employee_id | int    | NO   |     | NULL    |       |
+| basic_pay   | double | NO   |     | NULL    |       |
+| tax         | double | NO   |     | NULL    |       |
+| taxable_pay | double | NO   |     | NULL    |       |
+| deductions  | double | NO   |     | NULL    |       |
+| net_pay     | double | NO   |     | NULL    |       |
+| start       | date   | NO   |     | NULL    |       |
++-------------+--------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> INSERT INTO payroll ( employee_id,  basic_pay, tax, taxable_pay, deductions, net_pay,  start ) VALUES
+    -> (1, 3000000, 500000, 2000000, 1000000, 1500000, '2022-01-03'),
+    -> (2, 4000000, 500000, 2000000, 1000000, 2500000, '2022-01-04'),
+    -> (3, 5000000, 500000, 2000000, 1000000, 1600000, '2022-01-05');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * From payroll;
++-------------+-----------+--------+-------------+------------+---------+------------+
+| employee_id | basic_pay | tax    | taxable_pay | deductions | net_pay | start      |
++-------------+-----------+--------+-------------+------------+---------+------------+
+|           1 |   3000000 | 500000 |     2000000 |    1000000 | 1500000 | 2022-01-03 |
+|           2 |   4000000 | 500000 |     2000000 |    1000000 | 2500000 | 2022-01-04 |
+|           3 |   5000000 | 500000 |     2000000 |    1000000 | 1600000 | 2022-01-05 |
++-------------+-----------+--------+-------------+------------+---------+------------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE department
+    ->  ( employee_id INT NOT NULL,
+    -> department VARCHAR(150) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> describe department
+    -> ;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| employee_id | int          | NO   |     | NULL    |       |
+| department  | varchar(150) | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql>  INSERT INTO department (employee_id, department) VALUES
+    -> (1, 'Sales'),
+    -> (1, 'Marketing'),
+    -> (2, 'Sales'),
+    -> (3, 'Sales')
+    -> ;
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM department
+    -> ;
++-------------+------------+
+| employee_id | department |
++-------------+------------+
+|           1 | Sales      |
+|           1 | Marketing  |
+|           2 | Sales      |
+|           3 | Sales      |
++-------------+------------+
+4 rows in set (0.00 sec)
+
+mysql>
 
